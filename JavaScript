@@ -1,0 +1,64 @@
+var rentalCount = 0;
+
+document.getElementById('addRental').addEventListener('click', function() {
+    var rentalForms = document.getElementById('rentalForms');
+    var newForm = document.querySelector('.rentalForm').cloneNode(true);
+    rentalForms.appendChild(newForm);
+});
+
+document.getElementById('rentalForms').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    rentalCount++;
+
+    var targetForm = event.target;
+    var boardNumber = targetForm.querySelector('.boardNumber').value;
+    var phoneNumber = targetForm.querySelector('.phoneNumber').value;
+    var startTime = targetForm.querySelector('.startTime').value;
+    var endTime = targetForm.querySelector('.endTime').value;
+    var rentalCost = targetForm.querySelector('.rentalCost').value;
+
+    var rentalHours = Math.abs(new Date('1970-01-01T' + endTime + 'Z') - new Date('1970-01-01T' + startTime + 'Z')) / 36e5;
+    var totalCost = rentalHours * rentalCost;
+
+    var rentalInfo = document.createElement('div');
+    rentalInfo.innerHTML = '<h2>Аренда ' + rentalCount + '</h2>' +
+                           'Номер сап-борда: ' + boardNumber + '<br>' +
+                           'Телефон: ' + phoneNumber + '<br>' +
+                           'Время начала аренды: ' + startTime + '<br>' +
+                           'Время конца аренды: ' + endTime + '<br>' +
+                           'Стоимость аренды (за час): ' + rentalCost + ' рублей<br>' +
+                           'Общая стоимость аренды: ' + totalCost + ' рублей';
+
+    var countdown = rentalHours * 60 * 60;
+    var countdownDisplay = document.createElement('p');
+    rentalInfo.appendChild(countdownDisplay);
+
+    var countdownInterval = setInterval(function() {
+        countdown--;
+
+        var hours = Math.floor(countdown / 3600);
+        var minutes = Math.floor((countdown % 3600) / 60);
+        var seconds = countdown % 60;
+
+        countdownDisplay.textContent = 'Осталось времени: ' + hours + ' час(ов) ' + minutes + ' минут ' + seconds + ' секунд';
+
+        if (countdown <= 0) {
+            clearInterval(countdownInterval);
+            countdownDisplay.textContent = 'Время аренды истекло';
+        }
+    }, 1000);
+
+    var updateButton = document.createElement('button');
+    updateButton.textContent = 'Обновить';
+    updateButton.addEventListener('click', function() {
+        var additionalHours = prompt('На сколько часов увеличить аренду?', '1');
+        if (additionalHours) {
+            rentalHours += Number(additionalHours);
+            totalCost = rentalHours * rentalCost;
+            countdown += Number(additionalHours) * 60 * 60;
+            rentalInfo.innerHTML = '<h2>Аренда ' + rentalCount + '</h2>' +
+                                   'Номер сап-борда: ' + boardNumber + '<br>' +
+                                   'Телефон: ' + phoneNumber + '<br>' +
+                                   'Время начала аренды: ' + startTime + '<br>' +
+                                   'Время конца
