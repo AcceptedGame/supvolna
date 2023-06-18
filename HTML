@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Прокат сап-бордов</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <h1>Прокат сап-бордов</h1>
+    <div id="rentalForms">
+        <form class="rentalForm">
+            <label for="boardNumber">Номер сап-борда:</label>
+            <input type="text" class="boardNumber" name="boardNumber" required>
+            <label for="phoneNumber">Телефон:</label>
+            <input type="text" class="phoneNumber" name="phoneNumber" required>
+            <label for="startTime">Время начала аренды:</label>
+            <input type="time" class="startTime" name="startTime" required>
+            <label for="endTime">Время конца аренды:</label>
+            <input type="time" class="endTime" name="endTime" required>
+            <label for="rentalCost">Стоимость аренды (за час):</label>
+            <input type="number" class="rentalCost" name="rentalCost" required>
+            <button type="submit">Начать аренду</button>
+        </form>
+    </div>
+    <button id="addRental">Добавить новую аренду</button>
+    <div id="rentalInfo"></div>
+    <script src="script.js"></script>
+</body>
+</html>
